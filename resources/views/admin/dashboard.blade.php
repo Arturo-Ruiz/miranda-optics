@@ -11,7 +11,7 @@
             <div class="bg-gradient-to-r from-blue-500 to-purple-600 overflow-hidden shadow-xl sm:rounded-lg mb-6">
                 <div class="p-8 text-white">
                     <h3 class="text-3xl font-bold mb-2">¡Bienvenido, {{ Auth::user()->name }}!</h3>
-                    <p class="text-blue-100">Estás viendo el dashboard de Miranda Optics</p>
+                    <p class="text-blue-100">Estás viendo el dashboard de Optica Miranda</p>
                 </div>
             </div>
 
