@@ -490,12 +490,42 @@ const searchPatients = debounce(function (searchTerm) {
         .then(data => {
             if (data.success) {
                 updatePatientTable(data.patients.data);
+                if (data.pagination) {
+                    document.getElementById('paginationContainer').innerHTML = data.pagination;
+                }
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
 }, 300);
+
+// Handle pagination clicks
+document.addEventListener('click', function (e) {
+    const link = e.target.closest('#paginationContainer a');
+    if (link) {
+        e.preventDefault();
+
+        fetch(link.href, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updatePatientTable(data.patients.data);
+                    if (data.pagination) {
+                        document.getElementById('paginationContainer').innerHTML = data.pagination;
+                    }
+                    // Update browser URL
+                    window.history.pushState({}, '', link.href);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+});
 
 // Update patient table
 function updatePatientTable(patients) {

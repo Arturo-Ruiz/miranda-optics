@@ -26,13 +26,16 @@ class UserController extends Controller
         }
 
         // Order by creation date (newest first)
-        $users = $query->orderBy('created_at', 'desc')->paginate(10);
+        $users = $query->orderBy('created_at', 'desc')
+            ->paginate(1)
+            ->appends($request->query());
 
         // If it's an Ajax request, return JSON
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
-                'users' => $users
+                'users' => $users,
+                'pagination' => (string) $users->links()
             ]);
         }
 

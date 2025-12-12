@@ -191,16 +191,8 @@ window.deleteUser = function (id) {
         });
 }
 
-// Add user row to table
-function addUserRow(user) {
-    const tbody = document.getElementById('usersTableBody');
-
-    // Remove "no users" message if it exists
-    const emptyRow = tbody.querySelector('tr td[colspan="5"]');
-    if (emptyRow) {
-        emptyRow.parentElement.remove();
-    }
-
+// Generate HTML for a user row
+function getUserRowHtml(user) {
     const date = new Date(user.created_at);
     const formattedDate = date.toLocaleDateString('es-ES', {
         day: '2-digit',
@@ -210,9 +202,7 @@ function addUserRow(user) {
         minute: '2-digit'
     });
 
-    const row = document.createElement('tr');
-    row.setAttribute('data-user-id', user.id);
-    row.innerHTML = `
+    return `
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.id}</td>
         <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm font-medium text-gray-900">${escapeHtml(user.name)}</div>
@@ -240,22 +230,54 @@ function addUserRow(user) {
             </div>
         </td>
     `;
+}
+
+// Add user row to table (prepend)
+function addUserRow(user) {
+    const tbody = document.getElementById('usersTableBody');
+
+    // Remove "no users" message if it exists
+    const emptyRow = tbody.querySelector('tr td[colspan="5"]');
+    if (emptyRow) {
+        emptyRow.parentElement.remove();
+    }
+
+    const row = document.createElement('tr');
+    row.setAttribute('data-user-id', user.id);
+    row.innerHTML = getUserRowHtml(user);
 
     // Add to the beginning of the table
     tbody.insertBefore(row, tbody.firstChild);
+}
+
+// Update entire table
+function updateUsersTable(users) {
+    const tbody = document.getElementById('usersTableBody');
+    tbody.innerHTML = '';
+
+    if (users.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
+                    No se encontraron usuarios.
+                </td>
+            </tr>
+        `;
+    } else {
+        users.forEach(user => {
+            const row = document.createElement('tr');
+            row.setAttribute('data-user-id', user.id);
+            row.innerHTML = getUserRowHtml(user);
+            tbody.appendChild(row);
+        });
+    }
 }
 
 // Update user row in table
 function updateUserRow(user) {
     const row = document.querySelector(`tr[data-user-id="${user.id}"]`);
     if (row) {
-        const cells = row.querySelectorAll('td');
-        cells[1].querySelector('div').textContent = user.name;
-        cells[2].querySelector('div').textContent = user.email;
-
-        // Update onclick attributes
-        const editBtn = cells[4].querySelector('button:first-child');
-        editBtn.setAttribute('onclick', `editUser(${user.id}, '${escapeAttribute(user.name)}', '${escapeAttribute(user.email)}')`);
+        row.innerHTML = getUserRowHtml(user);
     }
 }
 
@@ -285,60 +307,10 @@ const searchUsers = debounce(function (searchTerm) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const tbody = document.getElementById('usersTableBody');
-                tbody.innerHTML = '';
+                updateUsersTable(data.users.data);
 
-                if (data.users.data.length === 0) {
-                    tbody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
-                            No se encontraron usuarios.
-                        </td>
-                    </tr>
-                `;
-                } else {
-                    data.users.data.forEach(user => {
-                        const date = new Date(user.created_at);
-                        const formattedDate = date.toLocaleDateString('es-ES', {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        });
-
-                        const row = document.createElement('tr');
-                        row.setAttribute('data-user-id', user.id);
-                        row.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.id}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">${escapeHtml(user.name)}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">${escapeHtml(user.email)}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formattedDate}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex gap-2">
-                                <button onclick="editUser(${user.id}, '${escapeAttribute(user.name)}', '${escapeAttribute(user.email)}')" 
-                                    class="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-md transition-colors duration-150">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                    </svg>
-                                    Editar
-                                </button>
-                                <button onclick="deleteUser(${user.id})" 
-                                    class="inline-flex items-center px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-medium rounded-md transition-colors duration-150">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
-                                    Eliminar
-                                </button>
-                            </div>
-                        </td>
-                    `;
-                        tbody.appendChild(row);
-                    });
+                if (data.pagination) {
+                    document.getElementById('paginationContainer').innerHTML = data.pagination;
                 }
             }
         })
@@ -346,6 +318,34 @@ const searchUsers = debounce(function (searchTerm) {
             console.error('Error:', error);
         });
 }, 300);
+
+// Handle pagination clicks
+document.addEventListener('click', function (e) {
+    const link = e.target.closest('#paginationContainer a');
+    if (link) {
+        e.preventDefault();
+
+        fetch(link.href, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateUsersTable(data.users.data);
+
+                    if (data.pagination) {
+                        document.getElementById('paginationContainer').innerHTML = data.pagination;
+                    }
+                    // Update browser URL
+                    window.history.pushState({}, '', link.href);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+});
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', function () {

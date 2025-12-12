@@ -27,13 +27,16 @@ class PatientController extends Controller
         }
 
         // Order by creation date (newest first)
-        $patients = $query->orderBy('created_at', 'desc')->paginate(10);
+        $patients = $query->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->appends($request->query());
 
         // If it's an Ajax request, return JSON
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
-                'patients' => $patients
+                'patients' => $patients,
+                'pagination' => (string) $patients->links()
             ]);
         }
 
