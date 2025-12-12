@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
+use PDF;
+
 class PatientController extends Controller
 {
     /**
@@ -49,9 +51,12 @@ class PatientController extends Controller
             'age' => ['required', 'integer', 'min:1', 'max:120'],
             'id_card' => ['required', 'string', 'max:50', 'unique:patients'],
             'occupation' => ['nullable', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['required', 'string', 'regex:/^[0-9]{10}$/'],
             'optical_formula' => ['nullable', 'array'],
         ]);
+
+        // Add +58 prefix to phone number for WhatsApp
+        $validated['phone'] = '+58' . $validated['phone'];
 
         $patient = Patient::create($validated);
 
@@ -74,6 +79,28 @@ class PatientController extends Controller
     }
 
     /**
+     * Print optical formula for patient as PDF.
+     */
+    public function printFormula(Patient $patient)
+    {
+        $pdf = PDF::loadView('patients.pdf-formula', compact('patient'));
+        
+        return $pdf->download('formula_optica_' . str_replace(' ', '_', $patient->full_name) .  '.pdf');
+    }
+
+    /**
+     * Print optical formula for patient as PDF.
+     */
+    public function printFormulaDouble(Patient $patient)
+    {
+        $copies = 2;
+        $pdf = PDF::loadView('patients.pdf-formula', compact('patient', 'copies'))
+                    ->setPaper('letter', 'landscape');
+
+        return $pdf->download('formula_optica_doble_' . str_replace(' ', '_', $patient->full_name) . '.pdf');
+    }
+
+    /**
      * Update the specified patient.
      */
     public function update(Request $request, Patient $patient)
@@ -84,9 +111,12 @@ class PatientController extends Controller
             'age' => ['required', 'integer', 'min:1', 'max:120'],
             'id_card' => ['required', 'string', 'max:50', 'unique:patients,id_card,' . $patient->id],
             'occupation' => ['nullable', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['required', 'string', 'regex:/^[0-9]{10}$/'],
             'optical_formula' => ['nullable', 'array'],
         ]);
+
+        // Add +58 prefix to phone number for WhatsApp
+        $validated['phone'] = '+58' . $validated['phone'];
 
         $patient->update($validated);
 

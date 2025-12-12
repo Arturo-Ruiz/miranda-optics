@@ -63,7 +63,7 @@ window.togglePassword = function (inputId) {
 }
 
 // Open create modal with animation
-window.openCreateModal = function () {
+window.openCreateUserModal = function () {
     const modal = document.getElementById('createUserModal');
     const backdrop = document.getElementById('createModalBackdrop');
     const panel = document.getElementById('createModalPanel');
@@ -85,7 +85,7 @@ window.openCreateModal = function () {
 }
 
 // Close create modal with animation
-window.closeCreateModal = function () {
+window.closeCreateUserModal = function () {
     const modal = document.getElementById('createUserModal');
     const backdrop = document.getElementById('createModalBackdrop');
     const panel = document.getElementById('createModalPanel');
@@ -129,7 +129,7 @@ window.editUser = function (id, name, email) {
 }
 
 // Close edit modal with animation
-window.closeEditModal = function () {
+window.closeEditUserModal = function () {
     const modal = document.getElementById('editUserModal');
     const backdrop = document.getElementById('editModalBackdrop');
     const panel = document.getElementById('editModalPanel');
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Create user button
     const createUserBtn = document.getElementById('createUserBtn');
     if (createUserBtn) {
-        createUserBtn.addEventListener('click', openCreateModal);
+        createUserBtn.addEventListener('click', openCreateUserModal);
     }
 
     // Create user form submit
@@ -383,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.success) {
                         showMessage(data.message, 'success');
                         addUserRow(data.user);
-                        closeCreateModal();
+                        closeCreateUserModal();
                         createUserForm.reset();
                     } else {
                         if (data.errors) {
@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.success) {
                         showMessage(data.message, 'success');
                         updateUserRow(data.user);
-                        closeEditModal();
+                        closeEditUserModal();
                     } else {
                         if (data.errors) {
                             showFormErrors(data.errors, 'edit');
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Search input
-    const searchInput = document.getElementById('searchInput');
+    const searchInput = document.getElementById('usersSearchInput');
     if (searchInput) {
         searchInput.addEventListener('input', function (e) {
             searchUsers(e.target.value);

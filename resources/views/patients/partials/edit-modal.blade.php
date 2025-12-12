@@ -63,8 +63,17 @@
                             </div>
                             <div>
                                 <label for="edit_phone" class="block text-sm font-medium text-gray-700">Teléfono *</label>
-                                <input type="text" name="phone" id="edit_phone" required
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                <div class="mt-1 flex rounded-md shadow-sm">
+                                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                        +58
+                                    </span>
+                                    <input type="text" name="phone" id="edit_phone" required
+                                        placeholder="4241234567"
+                                        pattern="[0-9]{10}"
+                                        maxlength="10"
+                                        class="flex-1 block w-full rounded-none rounded-r-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <p class="mt-1 text-xs text-gray-500">Solo números, 10 dígitos (ej: 4241234567)</p>
                             </div>
                         </div>
                     </div>

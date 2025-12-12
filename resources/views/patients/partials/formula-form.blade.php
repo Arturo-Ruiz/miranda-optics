@@ -73,8 +73,8 @@
                 <span class="text-sm text-gray-700">PROG</span>
             </label>
             <label class="flex items-center space-x-2">
-                <input type="checkbox" name="optical_formula[options][fotoc]" value="1" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                <span class="text-sm text-gray-700">FOTOC</span>
+                <input type="checkbox" name="optical_formula[options][foto]" value="1" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <span class="text-sm text-gray-700">FOTO</span>
             </label>
             <label class="flex items-center space-x-2">
                 <input type="checkbox" name="optical_formula[options][blue_block]" value="1" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
@@ -143,7 +143,7 @@
         <label for="formula_observation" class="block text-sm font-medium text-gray-700">
             Observación
         </label>
-        <textarea name="optical_formula[observacion]" id="formula_observation" rows="3"
+        <textarea name="optical_formula[observation]" id="formula_observation" rows="3"
             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
     </div>
 </div>

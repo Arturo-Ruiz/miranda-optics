@@ -24,7 +24,7 @@
             <div class="mb-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <div class="relative">
-                        <input type="text" id="searchInput" placeholder="Buscar por nombre o email..." 
+                        <input type="text" id="usersSearchInput" placeholder="Buscar por nombre o email..." 
                             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,6 +118,8 @@
     <!-- Include Modals -->
     @include('users.partials.create-modal')
     @include('users.partials.edit-modal')
+
+    @vite(['resources/js/users.js'])
 
     <script>
         // Global CSRF token setup

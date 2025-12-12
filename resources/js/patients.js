@@ -149,7 +149,13 @@ window.editPatient = function (patient) {
     document.getElementById('edit_age').value = patient.age;
     document.getElementById('edit_id_card').value = patient.id_card;
     document.getElementById('edit_occupation').value = patient.occupation || '';
-    document.getElementById('edit_phone').value = patient.phone;
+
+    // Strip +58 prefix from phone for display
+    let phoneNumber = patient.phone;
+    if (phoneNumber.startsWith('+58')) {
+        phoneNumber = phoneNumber.substring(3);
+    }
+    document.getElementById('edit_phone').value = phoneNumber;
 
     // Fill optical formula if exists
     if (patient.optical_formula) {
@@ -361,11 +367,11 @@ function displayFormula(patient) {
         html += `</div>`;
     }
 
-    if (formula.observacion) {
+    if (formula.observation) {
         html += `
             <div>
                 <h5 class="font-medium text-gray-700 mb-2">Observación</h5>
-                <p class="text-sm text-gray-600">${formula.observacion}</p>
+                <p class="text-sm text-gray-600">${formula.observation}</p>
             </div>
         `;
     }
@@ -416,10 +422,10 @@ function fillFormulaFields(formula, prefix) {
     });
 
     // Fill observation
-    if (formula.observacion) {
-        const textarea = form.querySelector('textarea[name="optical_formula[observacion]"]');
+    if (formula.observation) {
+        const textarea = form.querySelector('textarea[name="optical_formula[observation]"]');
         if (textarea) {
-            textarea.value = formula.observacion;
+            textarea.value = formula.observation;
         }
     }
 }
@@ -520,6 +526,13 @@ function updatePatientTable(patients) {
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${patient.phone}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div class="flex gap-2">
+                    <a href="/patients/${patient.id}/print"
+                        class="inline-flex items-center px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-medium rounded-md transition-colors duration-150">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        PDF
+                    </a>
                     <button onclick="viewFormula(${patient.id})" 
                         class="inline-flex items-center px-3 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded-md transition-colors duration-150">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -659,9 +672,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Search input
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', function (e) {
+    const patientsSearchInput = document.getElementById('patientsSearchInput');
+    if (patientsSearchInput) {
+        patientsSearchInput.addEventListener('input', function (e) {
             searchPatients(e.target.value);
         });
     }

@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
     Route::post('/patients', [PatientController::class, 'store'])->name('patients.store');
     Route::get('/patients/{patient}', [PatientController::class, 'show'])->name('patients.show');
+    Route::get('/patients/{patient}/print', [PatientController::class, 'printFormula'])->name('patients.print');
+    Route::get('/patients/{patient}/print-double', [PatientController::class, 'printFormulaDouble'])->name('patients.print-double');
     Route::put('/patients/{patient}', [PatientController::class, 'update'])->name('patients.update');
     Route::delete('/patients/{patient}', [PatientController::class, 'destroy'])->name('patients.destroy');
     
