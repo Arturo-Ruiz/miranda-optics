@@ -27,7 +27,7 @@ class UserController extends Controller
 
         // Order by creation date (newest first)
         $users = $query->orderBy('created_at', 'desc')
-            ->paginate(1)
+            ->paginate(10)
             ->appends($request->query());
 
         // If it's an Ajax request, return JSON

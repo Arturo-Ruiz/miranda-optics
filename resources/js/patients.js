@@ -457,7 +457,7 @@ window.deletePatient = function (id) {
                 if (tbody.children.length === 0) {
                     tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                        <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">
                             No se encontraron pacientes.
                         </td>
                     </tr>
@@ -535,7 +535,7 @@ function updatePatientTable(patients) {
     if (patients.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">
                     No se encontraron pacientes.
                 </td>
             </tr>
@@ -544,6 +544,26 @@ function updatePatientTable(patients) {
     }
 
     patients.forEach(patient => {
+        const createdDate = new Date(patient.created_at);
+        const formattedCreatedDate = createdDate.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+
+        const updatedDate = new Date(patient.updated_at);
+        const formattedUpdatedDate = updatedDate.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+
         const row = document.createElement('tr');
         row.setAttribute('data-patient-id', patient.id);
         row.innerHTML = `
@@ -554,6 +574,8 @@ function updatePatientTable(patients) {
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${patient.id_card}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${patient.age}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${patient.phone}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formattedCreatedDate}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formattedUpdatedDate}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <div class="flex gap-2">
                     <a href="/patients/${patient.id}/print"

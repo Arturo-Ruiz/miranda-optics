@@ -26,8 +26,8 @@ class PatientController extends Controller
             });
         }
 
-        // Order by creation date (newest first)
-        $patients = $query->orderBy('created_at', 'desc')
+        // Order by ID (newest first)
+        $patients = $query->orderBy('id', 'desc')
             ->paginate(10)
             ->appends($request->query());
 
