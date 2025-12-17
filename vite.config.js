@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/users.js',
                 'resources/js/patients.js',
+                'resources/js/crystals.js',
             ],
             refresh: true,
         }),
