@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -138,47 +140,65 @@ window.closeEditModal = function () {
 
 // Delete crystal
 window.deleteCrystal = function (id) {
-    if (!confirm("Are you sure you want to delete this crystal?")) {
-        return;
-    }
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/crystals/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": window.csrfToken,
+                    Accept: "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: "Deleted!",
+                            text: 'Crystal has been deleted.',
+                            showConfirmButton: false,
+                            timer: 1000,
+                        });
 
-    fetch(`/crystals/${id}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": window.csrfToken,
-            Accept: "application/json",
-        },
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.success) {
-                showMessage(data.message, "success");
-                const row = document.querySelector(
-                    `tr[data-crystal-id="${id}"]`
-                );
-                if (row) {
-                    row.remove();
-                }
+                        const row = document.querySelector(
+                            `tr[data-crystal-id="${id}"]`
+                        );
+                        if (row) {
+                            row.remove();
+                        }
 
-                const tbody = document.getElementById("crystalsTableBody");
-                if (tbody.children.length === 0) {
-                    tbody.innerHTML = `  
-                    <tr>  
-                        <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">  
-                            No crystals found.  
-                        </td>  
-                    </tr>  
-                `;
-                }
-            } else {
-                showMessage(data.message, "error");
-            }
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-            showMessage("Error deleting crystal.", "error");
-        });
+                        const tbody =
+                            document.getElementById("crystalsTableBody");
+                        if (tbody.children.length === 0) {
+                            tbody.innerHTML = `  
+                            <tr>  
+                                <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">  
+                                    No crystals found.  
+                                </td>  
+                            </tr>  
+                        `;
+                        }
+                    } else {
+                        Swal.fire("Error!", data.message, "error");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    Swal.fire("Error!", "Error deleting crystal.", "error");
+                });
+        }
+    });
 };
 
 // Search crystals
@@ -326,16 +346,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        showMessage(data.message, "success");
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: "Success!",
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1000,
+                        });
                         closeCreateModal();
                         createCrystalForm.reset();
-                        // Reload page to show new crystal
                         setTimeout(() => window.location.reload(), 1000);
                     } else {
                         if (data.errors) {
                             showFormErrors(data.errors, "create");
                         } else {
-                            showMessage(
+                            Swal.fire(
+                                "Error!",
                                 data.message || "Error creating crystal.",
                                 "error"
                             );
@@ -344,7 +372,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch((error) => {
                     console.error("Error:", error);
-                    showMessage("Error creating crystal.", "error");
+                    Swal.fire("Error!", "Error creating crystal.", "error");
                 })
                 .finally(() => {
                     submitBtn.disabled = false;
@@ -381,15 +409,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        showMessage(data.message, "success");
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: "Updated!",
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1000,
+                        });
                         closeEditModal();
-                        // Reload page to show updated crystal
                         setTimeout(() => window.location.reload(), 1000);
                     } else {
                         if (data.errors) {
                             showFormErrors(data.errors, "edit");
                         } else {
-                            showMessage(
+                            Swal.fire(
+                                "Error!",
                                 data.message || "Error updating crystal.",
                                 "error"
                             );
@@ -398,7 +434,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch((error) => {
                     console.error("Error:", error);
-                    showMessage("Error updating crystal.", "error");
+                    Swal.fire("Error!", "Error updating crystal.", "error");
                 })
                 .finally(() => {
                     submitBtn.disabled = false;
