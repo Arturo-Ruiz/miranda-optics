@@ -27,6 +27,9 @@
                     <x-nav-link :href="route('mounts.index')" :active="request()->routeIs('mounts.*')">
                         {{ __('Monturas') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('payment-methods.index')" :active="request()->routeIs('payment-methods.*')">
+                        {{ __('Métodos de Pago') }}
+                    </x-nav-link>
                 </div>
             </div>
 

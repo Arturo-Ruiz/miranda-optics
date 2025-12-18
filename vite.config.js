@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/patients.js',
                 'resources/js/crystals.js',
                 'resources/js/mounts.js',
+                'resources/js/payment_methods.js',
             ],
             refresh: true,
         }),

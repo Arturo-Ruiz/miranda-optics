@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::put('/mounts/{mount}', [MountController::class, 'update'])->name('mounts.update');
     Route::delete('/mounts/{mount}', [MountController::class, 'destroy'])->name('mounts.destroy');
 
+    // Payment Methods routes
+    Route::resource('payment-methods', App\Http\Controllers\PaymentMethodController::class)->except(['create', 'edit', 'show']);
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
