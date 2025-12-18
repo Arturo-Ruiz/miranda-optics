@@ -10,12 +10,27 @@
                 <input type="hidden" id="edit_patient_id" name="patient_id">
                 
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Editar Paciente</h3>
-                    
-                    <!-- Error messages container -->
-                    <div id="editFormErrors" class="mb-4 hidden">
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                            <ul id="editErrorList" class="list-disc list-inside"></ul>
+                    <!-- New Pretty Header -->
+                    <div class="sm:flex sm:items-start mb-4">
+                        <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-lg font-semibold leading-6 text-gray-900" id="modal-title">Editar Paciente</h3>
+                            
+                            <!-- Error messages container -->
+                            <div id="editFormErrors" class="hidden rounded-md bg-red-50 p-4 mt-2">
+                                <div class="flex">
+                                    <div class="ml-3">
+                                        <h3 class="text-sm font-medium text-red-800">Se encontraron errores:</h3>
+                                        <div class="mt-2 text-sm text-red-700">
+                                            <ul id="editErrorList" class="list-disc pl-5 space-y-1"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

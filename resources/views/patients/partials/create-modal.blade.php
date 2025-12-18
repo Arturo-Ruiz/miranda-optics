@@ -7,10 +7,27 @@
             <form id="createPatientForm">
                 @csrf
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <!-- Error messages container -->
-                    <div id="createFormErrors" class="mb-4 hidden">
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                            <ul id="createErrorList" class="list-disc list-inside"></ul>
+                    <!-- New Pretty Header -->
+                    <div class="sm:flex sm:items-start mb-4">
+                        <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-lg font-semibold leading-6 text-gray-900" id="modal-title">Crear Paciente</h3>
+                            
+                            <!-- Error messages container -->
+                            <div id="createFormErrors" class="hidden rounded-md bg-red-50 p-4 mt-2">
+                                <div class="flex">
+                                    <div class="ml-3">
+                                        <h3 class="text-sm font-medium text-red-800">Se encontraron errores:</h3>
+                                        <div class="mt-2 text-sm text-red-700">
+                                            <ul id="createErrorList" class="list-disc pl-5 space-y-1"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

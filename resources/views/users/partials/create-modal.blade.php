@@ -9,18 +9,28 @@
             <form id="createUserForm">
                 @csrf
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-title">
-                                Crear Nuevo Usuario
-                            </h3>
+                    <div class="sm:flex sm:items-start mb-4">
+                        <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-lg font-semibold leading-6 text-gray-900" id="modal-title">Crear Nuevo Usuario</h3>
                             
                             <!-- Error messages container -->
-                            <div id="createFormErrors" class="mb-4 hidden">
-                                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                                    <ul id="createErrorList" class="list-disc list-inside"></ul>
+                            <div id="createFormErrors" class="hidden rounded-md bg-red-50 p-4 mt-2">
+                                <div class="flex">
+                                    <div class="ml-3">
+                                        <h3 class="text-sm font-medium text-red-800">Se encontraron errores:</h3>
+                                        <div class="mt-2 text-sm text-red-700">
+                                            <ul id="createErrorList" class="list-disc pl-5 space-y-1"></ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
                             <div class="space-y-4">
                                 <!-- Name -->
@@ -77,8 +87,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button type="submit" id="createSubmitBtn"
