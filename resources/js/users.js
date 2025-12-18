@@ -1,4 +1,5 @@
 // Users Management JavaScript
+import Swal from "sweetalert2";
 
 // Debounce function for search
 function debounce(func, wait) {
@@ -14,198 +15,234 @@ function debounce(func, wait) {
 }
 
 // Show message
-function showMessage(message, type = 'success') {
-    const messageContainer = document.getElementById('messageContainer');
-    const messageContent = document.getElementById('messageContent');
+function showMessage(message, type = "success") {
+    const messageContainer = document.getElementById("messageContainer");
+    const messageContent = document.getElementById("messageContent");
 
-    messageContainer.classList.remove('hidden');
-    messageContent.className = `rounded-md p-4 ${type === 'success' ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'}`;
+    messageContainer.classList.remove("hidden");
+    messageContent.className = `rounded-md p-4 ${
+        type === "success"
+            ? "bg-green-100 border border-green-400 text-green-700"
+            : "bg-red-100 border border-red-400 text-red-700"
+    }`;
     messageContent.textContent = message;
 
     // Auto-hide after 5 seconds
     setTimeout(() => {
-        messageContainer.classList.add('hidden');
+        messageContainer.classList.add("hidden");
     }, 5000);
 }
 
 // Show form errors
 function showFormErrors(errors, formType) {
-    const errorContainer = formType === 'create' ? document.getElementById('createFormErrors') : document.getElementById('editFormErrors');
-    const errorList = formType === 'create' ? document.getElementById('createErrorList') : document.getElementById('editErrorList');
+    const errorContainer =
+        formType === "create"
+            ? document.getElementById("createFormErrors")
+            : document.getElementById("editFormErrors");
+    const errorList =
+        formType === "create"
+            ? document.getElementById("createErrorList")
+            : document.getElementById("editErrorList");
 
-    errorList.innerHTML = '';
+    errorList.innerHTML = "";
 
-    Object.values(errors).forEach(errorArray => {
-        errorArray.forEach(error => {
-            const li = document.createElement('li');
+    Object.values(errors).forEach((errorArray) => {
+        errorArray.forEach((error) => {
+            const li = document.createElement("li");
             li.textContent = error;
             errorList.appendChild(li);
         });
     });
 
-    errorContainer.classList.remove('hidden');
+    errorContainer.classList.remove("hidden");
 }
 
 // Hide form errors
 function hideFormErrors(formType) {
-    const errorContainer = formType === 'create' ? document.getElementById('createFormErrors') : document.getElementById('editFormErrors');
-    errorContainer.classList.add('hidden');
+    const errorContainer =
+        formType === "create"
+            ? document.getElementById("createFormErrors")
+            : document.getElementById("editFormErrors");
+    errorContainer.classList.add("hidden");
 }
 
 // Toggle password visibility
 window.togglePassword = function (inputId) {
     const input = document.getElementById(inputId);
-    if (input.type === 'password') {
-        input.type = 'text';
+    if (input.type === "password") {
+        input.type = "text";
     } else {
-        input.type = 'password';
+        input.type = "password";
     }
-}
+};
 
 // Open create modal with animation
 window.openCreateUserModal = function () {
-    const modal = document.getElementById('createUserModal');
-    const backdrop = document.getElementById('createModalBackdrop');
-    const panel = document.getElementById('createModalPanel');
-    const form = document.getElementById('createUserForm');
+    const modal = document.getElementById("createUserModal");
+    const backdrop = document.getElementById("createModalBackdrop");
+    const panel = document.getElementById("createModalPanel");
+    const form = document.getElementById("createUserForm");
 
     form.reset();
-    hideFormErrors('create');
+    hideFormErrors("create");
 
     // Show modal
-    modal.classList.remove('hidden');
+    modal.classList.remove("hidden");
 
     // Trigger animation
     setTimeout(() => {
-        backdrop.classList.remove('opacity-0');
-        backdrop.classList.add('opacity-100');
-        panel.classList.remove('opacity-0', 'scale-95');
-        panel.classList.add('opacity-100', 'scale-100');
+        backdrop.classList.remove("opacity-0");
+        backdrop.classList.add("opacity-100");
+        panel.classList.remove("opacity-0", "scale-95");
+        panel.classList.add("opacity-100", "scale-100");
     }, 10);
-}
+};
 
 // Close create modal with animation
 window.closeCreateUserModal = function () {
-    const modal = document.getElementById('createUserModal');
-    const backdrop = document.getElementById('createModalBackdrop');
-    const panel = document.getElementById('createModalPanel');
+    const modal = document.getElementById("createUserModal");
+    const backdrop = document.getElementById("createModalBackdrop");
+    const panel = document.getElementById("createModalPanel");
 
     // Trigger closing animation
-    backdrop.classList.remove('opacity-100');
-    backdrop.classList.add('opacity-0');
-    panel.classList.remove('opacity-100', 'scale-100');
-    panel.classList.add('opacity-0', 'scale-95');
+    backdrop.classList.remove("opacity-100");
+    backdrop.classList.add("opacity-0");
+    panel.classList.remove("opacity-100", "scale-100");
+    panel.classList.add("opacity-0", "scale-95");
 
     // Hide modal after animation
     setTimeout(() => {
-        modal.classList.add('hidden');
+        modal.classList.add("hidden");
     }, 300);
-}
+};
 
 // Open edit modal with animation
 window.editUser = function (id, name, email) {
-    const modal = document.getElementById('editUserModal');
-    const backdrop = document.getElementById('editModalBackdrop');
-    const panel = document.getElementById('editModalPanel');
+    const modal = document.getElementById("editUserModal");
+    const backdrop = document.getElementById("editModalBackdrop");
+    const panel = document.getElementById("editModalPanel");
 
-    document.getElementById('edit_user_id').value = id;
-    document.getElementById('edit_name').value = name;
-    document.getElementById('edit_email').value = email;
-    document.getElementById('edit_password').value = '';
-    document.getElementById('edit_password_confirmation').value = '';
+    document.getElementById("edit_user_id").value = id;
+    document.getElementById("edit_name").value = name;
+    document.getElementById("edit_email").value = email;
+    document.getElementById("edit_password").value = "";
+    document.getElementById("edit_password_confirmation").value = "";
 
-    hideFormErrors('edit');
+    hideFormErrors("edit");
 
     // Show modal
-    modal.classList.remove('hidden');
+    modal.classList.remove("hidden");
 
     // Trigger animation
     setTimeout(() => {
-        backdrop.classList.remove('opacity-0');
-        backdrop.classList.add('opacity-100');
-        panel.classList.remove('opacity-0', 'scale-95');
-        panel.classList.add('opacity-100', 'scale-100');
+        backdrop.classList.remove("opacity-0");
+        backdrop.classList.add("opacity-100");
+        panel.classList.remove("opacity-0", "scale-95");
+        panel.classList.add("opacity-100", "scale-100");
     }, 10);
-}
+};
 
 // Close edit modal with animation
 window.closeEditUserModal = function () {
-    const modal = document.getElementById('editUserModal');
-    const backdrop = document.getElementById('editModalBackdrop');
-    const panel = document.getElementById('editModalPanel');
+    const modal = document.getElementById("editUserModal");
+    const backdrop = document.getElementById("editModalBackdrop");
+    const panel = document.getElementById("editModalPanel");
 
     // Trigger closing animation
-    backdrop.classList.remove('opacity-100');
-    backdrop.classList.add('opacity-0');
-    panel.classList.remove('opacity-100', 'scale-100');
-    panel.classList.add('opacity-0', 'scale-95');
+    backdrop.classList.remove("opacity-100");
+    backdrop.classList.add("opacity-0");
+    panel.classList.remove("opacity-100", "scale-100");
+    panel.classList.add("opacity-0", "scale-95");
 
     // Hide modal after animation
     setTimeout(() => {
-        modal.classList.add('hidden');
+        modal.classList.add("hidden");
     }, 300);
-}
+};
 
 // Delete user
 window.deleteUser = function (id) {
-    if (!confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-        return;
-    }
+    Swal.fire({
+        title: "Estás seguro de eliminar este usuario?",
+        text: "¡No podrás revertir esta acción!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminarlo!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/users/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": window.csrfToken,
+                    Accept: "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: "Usuario Eliminado Exitosamente!",
+                            showConfirmButton: false,
+                            timer: 1000,
+                        });
+                        const row = document.querySelector(
+                            `tr[data-user-id="${id}"]`
+                        );
+                        if (row) {
+                            row.remove();
+                        }
 
-    fetch(`/users/${id}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': window.csrfToken,
-            'Accept': 'application/json'
+                        const tbody = document.getElementById("usersTableBody");
+                        if (tbody.children.length === 0) {
+                            tbody.innerHTML = `  
+                            <tr>  
+                                <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">  
+                                    No se encontraron usuarios.  
+                                </td>  
+                            </tr>  
+                        `;
+                        }
+                    } else {
+                        Swal.fire("Error!", data.message, "error");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    Swal.fire(
+                        "Error!",
+                        "Error al eliminar el usuario.",
+                        "error"
+                    );
+                });
         }
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showMessage(data.message, 'success');
-                // Remove row from table
-                const row = document.querySelector(`tr[data-user-id="${id}"]`);
-                if (row) {
-                    row.remove();
-                }
-
-                // Check if table is empty
-                const tbody = document.getElementById('usersTableBody');
-                if (tbody.children.length === 0) {
-                    tbody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
-                            No se encontraron usuarios.
-                        </td>
-                    </tr>
-                `;
-                }
-            } else {
-                showMessage(data.message, 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showMessage('Error al eliminar el usuario.', 'error');
-        });
-}
+    });
+};
 
 // Generate HTML for a user row
 function getUserRowHtml(user) {
     const date = new Date(user.created_at);
-    const formattedDate = date.toLocaleDateString('es-ES', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+    const formattedDate = date.toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
     });
 
     return `
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${user.id}</td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${
+            user.id
+        }</td>
         <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-medium text-gray-900">${escapeHtml(user.name)}</div>
+            <div class="text-sm font-medium text-gray-900">${escapeHtml(
+                user.name
+            )}</div>
         </td>
         <td class="px-6 py-4 whitespace-nowrap">
             <div class="text-sm text-gray-500">${escapeHtml(user.email)}</div>
@@ -213,7 +250,9 @@ function getUserRowHtml(user) {
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${formattedDate}</td>
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
             <div class="flex gap-2">
-                <button onclick="editUser(${user.id}, '${escapeAttribute(user.name)}', '${escapeAttribute(user.email)}')" 
+                <button onclick="editUser(${user.id}, '${escapeAttribute(
+        user.name
+    )}', '${escapeAttribute(user.email)}')" 
                     class="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium rounded-md transition-colors duration-150">
                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -234,7 +273,7 @@ function getUserRowHtml(user) {
 
 // Add user row to table (prepend)
 function addUserRow(user) {
-    const tbody = document.getElementById('usersTableBody');
+    const tbody = document.getElementById("usersTableBody");
 
     // Remove "no users" message if it exists
     const emptyRow = tbody.querySelector('tr td[colspan="5"]');
@@ -242,8 +281,8 @@ function addUserRow(user) {
         emptyRow.parentElement.remove();
     }
 
-    const row = document.createElement('tr');
-    row.setAttribute('data-user-id', user.id);
+    const row = document.createElement("tr");
+    row.setAttribute("data-user-id", user.id);
     row.innerHTML = getUserRowHtml(user);
 
     // Add to the beginning of the table
@@ -252,8 +291,8 @@ function addUserRow(user) {
 
 // Update entire table
 function updateUsersTable(users) {
-    const tbody = document.getElementById('usersTableBody');
-    tbody.innerHTML = '';
+    const tbody = document.getElementById("usersTableBody");
+    tbody.innerHTML = "";
 
     if (users.length === 0) {
         tbody.innerHTML = `
@@ -264,9 +303,9 @@ function updateUsersTable(users) {
             </tr>
         `;
     } else {
-        users.forEach(user => {
-            const row = document.createElement('tr');
-            row.setAttribute('data-user-id', user.id);
+        users.forEach((user) => {
+            const row = document.createElement("tr");
+            row.setAttribute("data-user-id", user.id);
             row.innerHTML = getUserRowHtml(user);
             tbody.appendChild(row);
         });
@@ -283,119 +322,134 @@ function updateUserRow(user) {
 
 // Escape HTML
 function escapeHtml(text) {
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
 }
 
 // Escape attribute
 function escapeAttribute(text) {
-    return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    return text.replace(/'/g, "\\'").replace(/"/g, "&quot;");
 }
 
 // Search users
 const searchUsers = debounce(function (searchTerm) {
-    const url = new URL('/users', window.location.origin);
-    url.searchParams.append('search', searchTerm);
+    const url = new URL("/users", window.location.origin);
+    url.searchParams.append("search", searchTerm);
 
     fetch(url, {
         headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Accept': 'application/json'
-        }
+            "X-Requested-With": "XMLHttpRequest",
+            Accept: "application/json",
+        },
     })
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
             if (data.success) {
                 updateUsersTable(data.users.data);
 
                 if (data.pagination) {
-                    document.getElementById('paginationContainer').innerHTML = data.pagination;
+                    document.getElementById("paginationContainer").innerHTML =
+                        data.pagination;
                 }
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
+        .catch((error) => {
+            console.error("Error:", error);
         });
 }, 300);
 
 // Handle pagination clicks
-document.addEventListener('click', function (e) {
-    const link = e.target.closest('#paginationContainer a');
+document.addEventListener("click", function (e) {
+    const link = e.target.closest("#paginationContainer a");
     if (link) {
         e.preventDefault();
 
         fetch(link.href, {
             headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json'
-            }
+                "X-Requested-With": "XMLHttpRequest",
+                Accept: "application/json",
+            },
         })
-            .then(response => response.json())
-            .then(data => {
+            .then((response) => response.json())
+            .then((data) => {
                 if (data.success) {
                     updateUsersTable(data.users.data);
 
                     if (data.pagination) {
-                        document.getElementById('paginationContainer').innerHTML = data.pagination;
+                        document.getElementById(
+                            "paginationContainer"
+                        ).innerHTML = data.pagination;
                     }
                     // Update browser URL
-                    window.history.pushState({}, '', link.href);
+                    window.history.pushState({}, "", link.href);
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch((error) => console.error("Error:", error));
     }
 });
 
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     // Create user button
-    const createUserBtn = document.getElementById('createUserBtn');
+    const createUserBtn = document.getElementById("createUserBtn");
     if (createUserBtn) {
-        createUserBtn.addEventListener('click', openCreateUserModal);
+        createUserBtn.addEventListener("click", openCreateUserModal);
     }
 
     // Create user form submit
-    const createUserForm = document.getElementById('createUserForm');
+    const createUserForm = document.getElementById("createUserForm");
     if (createUserForm) {
-        createUserForm.addEventListener('submit', function (e) {
+        createUserForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const submitBtn = document.getElementById('createSubmitBtn');
+            const submitBtn = document.getElementById("createSubmitBtn");
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Creando...';
+            submitBtn.textContent = "Creando...";
 
-            hideFormErrors('create');
+            hideFormErrors("create");
 
             const formData = new FormData(this);
 
-            fetch('/users', {
-                method: 'POST',
+            fetch("/users", {
+                method: "POST",
                 headers: {
-                    'X-CSRF-TOKEN': window.csrfToken,
-                    'Accept': 'application/json'
+                    "X-CSRF-TOKEN": window.csrfToken,
+                    Accept: "application/json",
                 },
-                body: formData
+                body: formData,
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     if (data.success) {
-                        showMessage(data.message, 'success');
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: "Creado!",
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1000,
+                        });
                         addUserRow(data.user);
                         closeCreateUserModal();
                         createUserForm.reset();
                     } else {
                         if (data.errors) {
-                            showFormErrors(data.errors, 'create');
+                            showFormErrors(data.errors, "create");
                         } else {
-                            showMessage(data.message || 'Error al crear el usuario.', 'error');
+                            Swal.fire(
+                                "Error!",
+                                data.message || "Error al crear el usuario.",
+                                "error"
+                            );
                         }
                     }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showMessage('Error al crear el usuario.', 'error');
+                .catch((error) => {
+                    console.error("Error:", error);
+                    showMessage("Error al crear el usuario.", "error");
                 })
                 .finally(() => {
                     submitBtn.disabled = false;
@@ -405,47 +459,60 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Edit user form submit
-    const editUserForm = document.getElementById('editUserForm');
+    const editUserForm = document.getElementById("editUserForm");
     if (editUserForm) {
-        editUserForm.addEventListener('submit', function (e) {
+        editUserForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const submitBtn = document.getElementById('editSubmitBtn');
+            const submitBtn = document.getElementById("editSubmitBtn");
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Actualizando...';
+            submitBtn.textContent = "Actualizando...";
 
-            hideFormErrors('edit');
+            hideFormErrors("edit");
 
-            const userId = document.getElementById('edit_user_id').value;
+            const userId = document.getElementById("edit_user_id").value;
             const formData = new FormData(this);
 
             fetch(`/users/${userId}`, {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'X-CSRF-TOKEN': window.csrfToken,
-                    'Accept': 'application/json',
-                    'X-HTTP-Method-Override': 'PUT'
+                    "X-CSRF-TOKEN": window.csrfToken,
+                    Accept: "application/json",
+                    "X-HTTP-Method-Override": "PUT",
                 },
-                body: formData
+                body: formData,
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     if (data.success) {
-                        showMessage(data.message, 'success');
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: "Actualizado!",
+                            text: data.message,
+                            showConfirmButton: false,
+                            timer: 1000,
+                        });
                         updateUserRow(data.user);
                         closeEditUserModal();
                     } else {
                         if (data.errors) {
-                            showFormErrors(data.errors, 'edit');
+                            showFormErrors(data.errors, "edit");
                         } else {
-                            showMessage(data.message || 'Error al actualizar el usuario.', 'error');
+                            Swal.fire(
+                                "Error!",
+                                data.message ||
+                                    "Error al actualizar el usuario.",
+                                "error"
+                            );
                         }
                     }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showMessage('Error al actualizar el usuario.', 'error');
+                .catch((error) => {
+                    console.error("Error:", error);
+                    showMessage("Error al actualizar el usuario.", "error");
                 })
                 .finally(() => {
                     submitBtn.disabled = false;
@@ -455,9 +522,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Search input
-    const searchInput = document.getElementById('usersSearchInput');
+    const searchInput = document.getElementById("usersSearchInput");
     if (searchInput) {
-        searchInput.addEventListener('input', function (e) {
+        searchInput.addEventListener("input", function (e) {
             searchUsers(e.target.value);
         });
     }
