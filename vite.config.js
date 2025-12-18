@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/users.js',
                 'resources/js/patients.js',
                 'resources/js/crystals.js',
+                'resources/js/mounts.js',
             ],
             refresh: true,
         }),

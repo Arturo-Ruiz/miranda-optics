@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('crystals.index')" :active="request()->routeIs('crystals.*')">
                         {{ __('Cristales') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('mounts.index')" :active="request()->routeIs('mounts.*')">
+                        {{ __('Monturas') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -87,6 +90,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('crystals.index')" :active="request()->routeIs('crystals.*')">
                 {{ __('Cristales') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('mounts.index')" :active="request()->routeIs('mounts.*')">
+                {{ __('Monturas') }}
             </x-responsive-nav-link>
         </div>
 

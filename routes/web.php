@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\CrystalController;
+use App\Http\Controllers\MountController;   
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -40,6 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/crystals/{crystal}', [CrystalController::class, 'show'])->name('crystals.show');
     Route::put('/crystals/{crystal}', [CrystalController::class, 'update'])->name('crystals.update');
     Route::delete('/crystals/{crystal}', [CrystalController::class, 'destroy'])->name('crystals.destroy');
+
+    //Mounts management routes
+    Route::get('/mounts', [MountController::class, 'index'])->name('mounts.index');
+    Route::post('/mounts', [MountController::class, 'store'])->name('mounts.store');
+    Route::get('/mounts/{mount}', [MountController::class, 'show'])->name('mounts.show');
+    Route::put('/mounts/{mount}', [MountController::class, 'update'])->name('mounts.update');
+    Route::delete('/mounts/{mount}', [MountController::class, 'destroy'])->name('mounts.destroy');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
