@@ -20,6 +20,11 @@ class MountController extends Controller
             ->paginate(10)
             ->appends($request->all());
 
+        $mounts->getCollection()->transform(function ($mount) {
+            $mount->stock_color_class = $mount->getStockColorClass();
+            return $mount;
+        });
+
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,

@@ -211,10 +211,10 @@ function updateMountTable(mounts) {
                 }</div>    
             </td>    
             <td class="px-6 py-4 whitespace-nowrap">  
-                <span class="${getStockColorClass(mount.stock)}">${
-            mount.stock
-        }</span>  
-            </td>  
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${mount.stock_color_class}">  
+                ${mount.stock} unidades  
+                </span>  
+            </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$ ${parseFloat(
                 mount.price
             ).toFixed(2)}</td>  
@@ -413,7 +413,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             timer: 1000,
                         });
                         closeEditModal();
-                        // AQUÍ EL CAMBIO: Refrescamos la tabla AJAX
                         refreshTable();
                     } else {
                         if (data.errors) showFormErrors(data.errors, "edit");

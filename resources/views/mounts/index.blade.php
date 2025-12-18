@@ -57,7 +57,9 @@
                                         <div class="text-sm font-medium text-gray-900">{{ $mount->name }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="{{ $mount->getStockColorClass() }}">{{ $mount->stock }}</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $mount->getStockColorClass() }}">
+                                            {{ $mount->stock }} unidades
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${{ number_format($mount->price, 2) }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

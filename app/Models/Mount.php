@@ -23,11 +23,11 @@ class Mount extends Model
     public function getStockColorClass()
     {
         if ($this->stock < 10) {
-            return 'text-red-600 font-semibold';
+            return 'bg-red-100 text-red-800';
         } elseif ($this->stock < 20) {
-            return 'text-yellow-600 font-semibold';
+            return 'bg-yellow-100 text-yellow-800';
         } else {
-            return 'text-green-600 font-semibold';
+            return 'bg-green-100 text-green-800';
         }
     }
 }
