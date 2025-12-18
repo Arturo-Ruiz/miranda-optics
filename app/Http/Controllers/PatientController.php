@@ -36,7 +36,7 @@ class PatientController extends Controller
             return response()->json([
                 'success' => true,
                 'patients' => $patients,
-                'pagination' => (string) $patients->links()
+                'pagination' => (string) $patients->appends($request->all())->links()
             ]);
         }
 
