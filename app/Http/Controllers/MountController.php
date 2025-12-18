@@ -24,7 +24,7 @@ class MountController extends Controller
             return response()->json([
                 'success' => true,
                 'mounts' => $mounts,
-                'pagination' => (string) $mounts->links()
+                'pagination' => (string) $mounts->appends($request->all())->links()
             ]);
         }
 
